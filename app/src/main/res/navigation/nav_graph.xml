@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/clientsFragment">
+
+
+    <fragment
+        android:id="@+id/clientsFragment"
+        android:name="com.kldaji.loanclientmanagement.ui.client.ClientsFragment"
+        android:label="ClientsFragment" >
+        <action
+            android:id="@+id/action_clientsFragment_to_clientSearchFragment"
+            app:destination="@id/clientSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/clientSearchFragment"
+        android:name="com.kldaji.loanclientmanagement.ui.client.ClientSearchFragment"
+        android:label="ClientSearchFragment" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.kldaji.loanclientmanagement.ui.calendar.CalendarFragment"
+        android:label="CalendarFragment" />
+</navigation>

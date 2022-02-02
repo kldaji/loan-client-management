@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/clientsFragment"
+        android:icon="@drawable/ic_person_24"
+        android:title="@string/menu_clients_fragment" />
+    <item
+        android:id="@+id/calendarFragment"
+        android:icon="@drawable/ic_calendar_24"
+        android:title="@string/menu_calendar_fragment" />
+</menu>
