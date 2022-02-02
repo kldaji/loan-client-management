@@ -1,4 +1,4 @@
-package com.kldaji.loanclientmanagement.ui
+package com.kldaji.loanclientmanagement.ui.common
 
 import android.os.Bundle
 import android.view.LayoutInflater
