@@ -10,15 +10,22 @@
         android:name="com.kldaji.loanclientmanagement.ui.client.ClientsFragment"
         android:label="ClientsFragment" >
         <action
-            android:id="@+id/action_clientsFragment_to_clientSearchFragment"
-            app:destination="@id/clientSearchFragment" />
+            android:id="@+id/action_clientsFragment_to_searchClientFragment"
+            app:destination="@id/searchClientFragment" />
+        <action
+            android:id="@+id/action_clientsFragment_to_addClientFragment"
+            app:destination="@id/addClientFragment" />
     </fragment>
     <fragment
-        android:id="@+id/clientSearchFragment"
+        android:id="@+id/searchClientFragment"
         android:name="com.kldaji.loanclientmanagement.ui.client.SearchClientFragment"
-        android:label="ClientSearchFragment" />
+        android:label="SearchClientFragment" />
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.kldaji.loanclientmanagement.ui.calendar.CalendarFragment"
         android:label="CalendarFragment" />
+    <fragment
+        android:id="@+id/addClientFragment"
+        android:name="com.kldaji.loanclientmanagement.ui.client.AddClientFragment"
+        android:label="AddClientFragment" />
 </navigation>

@@ -19,10 +19,14 @@ class ClientsFragment : BaseFragment<FragmentClientsBinding>(R.layout.fragment_c
             when (menuItem.itemId) {
                 R.id.search -> {
                     this.findNavController()
-                        .navigate(R.id.action_clientsFragment_to_clientSearchFragment)
+                        .navigate(R.id.action_clientsFragment_to_searchClientFragment)
                     true
                 }
-                R.id.add_client -> true
+                R.id.add_client -> {
+                    this.findNavController()
+                        .navigate(R.id.action_clientsFragment_to_addClientFragment)
+                    true
+                }
                 else -> false
             }
         }
