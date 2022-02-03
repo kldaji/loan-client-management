@@ -15,4 +15,21 @@
     <!-- search_client_fragment -->
     <string name="search_client_fragment_hint">고객 이름을 입력해주세요.</string>
     <string name="search_client_fragment_cancel">취소</string>
+
+    <!-- add_client_fragment_toolbar -->
+    <string name="menu_add_client_fragment_close">닫기</string>
+    <string name="add_client_fragment_security">담보대출</string>
+    <string name="add_client_fragment_jeonse">전세대출</string>
+    <string name="add_client_fragment_name">성명</string>
+    <string name="add_client_fragment_name_hint">고객 성명을 입력하세요.</string>
+    <string name="add_client_fragment_rmm">주민번호</string>
+    <string name="add_client_fragment_rmm_front_hint">970703</string>
+    <string name="add_client_fragment_hyphen">-</string>
+    <string name="add_client_fragment_rmm_back_hint">1</string>
+    <string name="add_client_fragment_rmm_hidden">******</string>
+    <string name="add_client_fragment_call">연락처</string>
+    <string name="add_client_fragment_call_front">010</string>
+    <string name="add_client_fragment_call_middle_hint">8616</string>
+    <string name="add_client_fragment_call_back_hint">2217</string>
+    <string name="add_client_fragment_load_doc_image">대출 서류 이미지</string>
 </resources>
