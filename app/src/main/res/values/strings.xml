@@ -4,4 +4,8 @@
     <!-- bottom_navigation_view_menu -->
     <string name="menu_clients_fragment">고객</string>
     <string name="menu_calendar_fragment">캘린더</string>
+
+    <!-- clients_fragment_toolbar -->
+    <string name="menu_clients_fragment_search">고객 검색</string>
+    <string name="menu_clients_fragment_add_client">고객 추가</string>
 </resources>
