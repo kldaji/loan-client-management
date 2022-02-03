@@ -8,6 +8,7 @@ import com.kldaji.loanclientmanagement.model.data.RecentSearchWord
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
 import com.kldaji.loanclientmanagement.ui.client.adapter.RecentSearchWordsAdapter
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
+import com.kldaji.loanclientmanagement.utils.showKeyBoard
 
 class SearchClientFragment :
     BaseFragment<FragmentSearchClientBinding>(R.layout.fragment_search_client) {
@@ -16,6 +17,7 @@ class SearchClientFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setEditTextFocus()
         setRecentSearchWordsAdapter()
         setSearchResultClientsAdapter()
 
@@ -24,6 +26,13 @@ class SearchClientFragment :
             RecentSearchWord(1, "123"),
             RecentSearchWord(1, "123"))
         recentSearchWordsAdapter.submitList(wordList)
+    }
+
+    private fun setEditTextFocus() {
+        with(binding.tieSearchClient) {
+            requestFocus()
+            requireContext().showKeyBoard(this)
+        }
     }
 
     private fun setRecentSearchWordsAdapter() {
