@@ -11,4 +11,8 @@
 
     <!-- item_client -->
     <string name="item_client_profile">고객 프로필 사진</string>
+
+    <!-- search_client_fragment -->
+    <string name="search_client_fragment_hint">고객 이름을 입력해주세요.</string>
+    <string name="search_client_fragment_cancel">취소</string>
 </resources>
