@@ -8,4 +8,7 @@
     <!-- clients_fragment_toolbar -->
     <string name="menu_clients_fragment_search">고객 검색</string>
     <string name="menu_clients_fragment_add_client">고객 추가</string>
+
+    <!-- item_client -->
+    <string name="item_client_profile">고객 프로필 사진</string>
 </resources>
