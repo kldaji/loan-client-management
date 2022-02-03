@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/clientSearchFragment"
-        android:name="com.kldaji.loanclientmanagement.ui.client.ClientSearchFragment"
+        android:name="com.kldaji.loanclientmanagement.ui.client.SearchClientFragment"
         android:label="ClientSearchFragment" />
     <fragment
         android:id="@+id/calendarFragment"
