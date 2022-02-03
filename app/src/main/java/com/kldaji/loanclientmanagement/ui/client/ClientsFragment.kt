@@ -8,10 +8,12 @@ import com.kldaji.loanclientmanagement.databinding.FragmentClientsBinding
 import com.kldaji.loanclientmanagement.model.data.Client
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ClientsFragment : BaseFragment<FragmentClientsBinding>(R.layout.fragment_clients) {
-
     private val clientsAdapter by lazy { ClientsAdapter() }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbarIconClickListener()

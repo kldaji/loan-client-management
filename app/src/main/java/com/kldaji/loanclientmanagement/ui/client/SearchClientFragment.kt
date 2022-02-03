@@ -11,7 +11,9 @@ import com.kldaji.loanclientmanagement.ui.client.adapter.RecentSearchWordsAdapte
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
 import com.kldaji.loanclientmanagement.utils.hideKeyBoard
 import com.kldaji.loanclientmanagement.utils.showKeyBoard
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchClientFragment :
     BaseFragment<FragmentSearchClientBinding>(R.layout.fragment_search_client) {
     private val recentSearchWordsAdapter by lazy { RecentSearchWordsAdapter() }
