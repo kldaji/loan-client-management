@@ -2,10 +2,10 @@ package com.kldaji.loanclientmanagement.ui.client
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentSearchClientBinding
-import com.kldaji.loanclientmanagement.model.data.RecentSearchWord
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
 import com.kldaji.loanclientmanagement.ui.client.adapter.RecentSearchWordsAdapter
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
@@ -18,6 +18,7 @@ class SearchClientFragment :
     BaseFragment<FragmentSearchClientBinding>(R.layout.fragment_search_client) {
     private val recentSearchWordsAdapter by lazy { RecentSearchWordsAdapter() }
     private val searchResultClientsAdapter by lazy { ClientsAdapter() }
+    private val clientViewModel: ClientViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,12 +27,7 @@ class SearchClientFragment :
         setRootClickListener()
         setRecentSearchWordsAdapter()
         setSearchResultClientsAdapter()
-
-        // dummy data
-        val wordList = listOf(RecentSearchWord(1, "123"),
-            RecentSearchWord(1, "123"),
-            RecentSearchWord(1, "123"))
-        recentSearchWordsAdapter.submitList(wordList)
+        setRecentSearchWordListObserver()
     }
 
     private fun setEditTextFocus() {
@@ -60,5 +56,11 @@ class SearchClientFragment :
 
     private fun setSearchResultClientsAdapter() {
         binding.rvSearchClientSearchResultClients.adapter = searchResultClientsAdapter
+    }
+
+    private fun setRecentSearchWordListObserver() {
+        clientViewModel.recentSearchWordList.observe(viewLifecycleOwner, { recentSearchWordList ->
+            recentSearchWordsAdapter.submitList(recentSearchWordList)
+        })
     }
 }

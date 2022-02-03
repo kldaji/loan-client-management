@@ -2,10 +2,10 @@ package com.kldaji.loanclientmanagement.ui.client
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentClientsBinding
-import com.kldaji.loanclientmanagement.model.data.Client
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,15 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ClientsFragment : BaseFragment<FragmentClientsBinding>(R.layout.fragment_clients) {
     private val clientsAdapter by lazy { ClientsAdapter() }
+    private val clientViewModel: ClientViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbarIconClickListener()
         setClientsAdapter()
-        // dummy data
-        val clientList =
-            listOf(Client(1, "123"), Client(1, "123"), Client(1, "123"), Client(1, "123"))
-        clientsAdapter.submitList(clientList)
+        setClientListObserver()
     }
 
     private fun setToolbarIconClickListener() {
@@ -44,5 +42,11 @@ class ClientsFragment : BaseFragment<FragmentClientsBinding>(R.layout.fragment_c
 
     private fun setClientsAdapter() {
         binding.rvClients.adapter = clientsAdapter
+    }
+
+    private fun setClientListObserver() {
+        clientViewModel.clientList.observe(viewLifecycleOwner, { clientList ->
+            clientsAdapter.submitList(clientList)
+        })
     }
 }
