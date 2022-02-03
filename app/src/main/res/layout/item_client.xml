@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="client"
+            type="com.kldaji.loanclientmanagement.model.data.Client" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,12 +30,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:text="@{client.name}"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iv_client"
             app:layout_constraintStart_toEndOf="@id/iv_client"
             app:layout_constraintTop_toTopOf="@id/iv_client"
+            tools:ignore="SpUsage"
             tools:text="김영욱" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
