@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kldaji.loanclientmanagement.databinding.ItemClientBinding
 import com.kldaji.loanclientmanagement.model.data.Client
 
-class ClientsAdapter :
+class ClientsAdapter(private val itemClickListener: ItemClickListener) :
     ListAdapter<Client, ClientsAdapter.ClientViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientViewHolder =
@@ -20,8 +20,14 @@ class ClientsAdapter :
         holder.bind(getItem(position))
     }
 
-    class ClientViewHolder(private val binding: ItemClientBinding) :
+    inner class ClientViewHolder(private val binding: ItemClientBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener.onItemClick(adapterPosition)
+            }
+        }
 
         fun bind(_client: Client) {
             binding.client = _client

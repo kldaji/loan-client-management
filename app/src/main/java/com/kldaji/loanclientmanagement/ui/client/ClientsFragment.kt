@@ -7,13 +7,14 @@ import androidx.navigation.fragment.findNavController
 import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentClientsBinding
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
+import com.kldaji.loanclientmanagement.ui.client.adapter.ItemClickListener
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ClientsFragment : BaseFragment<FragmentClientsBinding>(R.layout.fragment_clients) {
-    private val clientsAdapter by lazy { ClientsAdapter() }
     private val clientViewModel: ClientViewModel by activityViewModels()
+    private lateinit var clientsAdapter: ClientsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,6 +42,13 @@ class ClientsFragment : BaseFragment<FragmentClientsBinding>(R.layout.fragment_c
     }
 
     private fun setClientsAdapter() {
+        clientsAdapter = ClientsAdapter(object : ItemClickListener {
+            override fun onItemClick(position: Int) {
+                this@ClientsFragment.findNavController()
+                    .navigate(ClientsFragmentDirections.actionClientsFragmentToClientInfoFragment(
+                        clientsAdapter.currentList[position]))
+            }
+        })
         binding.rvClients.adapter = clientsAdapter
     }
 
