@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.kldaji.loanclientmanagement.model.data.Client
 import com.kldaji.loanclientmanagement.model.data.RecentSearchWord
 import com.kldaji.loanclientmanagement.model.local.client.ClientLocalDataSource
+import com.kldaji.loanclientmanagement.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +25,9 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
     val clientInfoError: LiveData<Boolean> = _clientInfoError
     private val _successInAddClient = MutableLiveData<Boolean>()
     val successInAddClient: LiveData<Boolean> = _successInAddClient
+
+    private val _editable = MutableLiveData<Event<Boolean>>()
+    val editable: LiveData<Event<Boolean>> = _editable
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -62,5 +66,23 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
 
     fun doneSuccessInAddClient() {
         _successInAddClient.value = false
+    }
+
+    fun toggleEditable() {
+        val flag = _editable.value?.peekContent() ?: false
+        _editable.value = Event(!flag)
+    }
+
+    fun updateClient(oldClient: Client, newClient: Client) {
+        checkClientInfo(newClient) ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            clientLocalDataSource.updateClient(newClient)
+            val tempClientList = clientMutableList.value?.toMutableList() ?: return@launch
+            val targetIndex = tempClientList.indexOf(oldClient)
+            if (targetIndex != -1) {
+                tempClientList[targetIndex] = newClient
+            }
+            clientMutableList.postValue(tempClientList)
+        }
     }
 }

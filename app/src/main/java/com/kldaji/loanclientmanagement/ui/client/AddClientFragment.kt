@@ -10,7 +10,6 @@ import com.kldaji.loanclientmanagement.databinding.FragmentAddClientBinding
 import com.kldaji.loanclientmanagement.model.data.Client
 import com.kldaji.loanclientmanagement.model.data.Loan
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
-import com.kldaji.loanclientmanagement.utils.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +27,7 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
     private fun setToolbarIconClickListener() {
         binding.tbAddClient.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.close -> {
+                R.id.close_edit_complete -> {
                     this.findNavController().popBackStack()
                     true
                 }
@@ -39,23 +38,31 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
 
     private fun setAddButtonClickListener() {
         binding.btnAddClientFragmentAdd.setOnClickListener {
-            val loan = when (binding.rgAddClient.checkedRadioButtonId) {
-                R.id.rb_add_client_security -> Loan.SECURITY
-                else -> Loan.JEONSE
-            }
-            val newClient = Client(
-                loan = loan,
-                name = binding.etAddClientName.text.toString(),
-                rrmFront = binding.etAddClientRrmFront.text.toString(),
-                rrmBack = binding.etAddClientRrmBack.text.toString(),
-                callMiddle = binding.etAddClientCallMiddle.text.toString(),
-                callBack = binding.etAddClientCallBack.text.toString(),
-                meetingDate = binding.tvAddClientMeetingDate.text.toString(),
-                loanStartDate = binding.tvAddClientLoanStartDate.text.toString(),
-                docs = ""
-            )
+            val loan = getLoan()
+            val newClient = getNewClient(loan)
             clientViewModel.addClient(newClient)
         }
+    }
+
+    private fun getLoan(): Loan {
+        return when (binding.rgAddClient.checkedRadioButtonId) {
+            R.id.rb_add_client_security -> Loan.SECURITY
+            else -> Loan.JEONSE
+        }
+    }
+
+    private fun getNewClient(loan: Loan): Client {
+        return Client(
+            loan = loan,
+            name = binding.etAddClientName.text.toString(),
+            rrmFront = binding.etAddClientRrmFront.text.toString(),
+            rrmBack = binding.etAddClientRrmBack.text.toString(),
+            callMiddle = binding.etAddClientCallMiddle.text.toString(),
+            callBack = binding.etAddClientCallBack.text.toString(),
+            meetingDate = binding.tvAddClientMeetingDate.text.toString(),
+            loanStartDate = binding.tvAddClientLoanStartDate.text.toString(),
+            docs = ""
+        )
     }
 
     private fun setClientInfoErrorObserver() {
