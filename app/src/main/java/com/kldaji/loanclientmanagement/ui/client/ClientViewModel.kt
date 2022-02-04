@@ -33,10 +33,6 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
         viewModelScope.launch(Dispatchers.IO) {
             clientMutableList.postValue(clientLocalDataSource.getAllClients())
         }
-        // dummy data
-        recentSearchWordMutableList.value = listOf(RecentSearchWord(1, "123"),
-            RecentSearchWord(1, "123"),
-            RecentSearchWord(1, "123"))
     }
 
     fun addClient(newClient: Client) {
@@ -45,6 +41,7 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
             clientLocalDataSource.insertClient(newClient)
             val tempClientList = clientMutableList.value?.toMutableList() ?: return@launch
             tempClientList.add(newClient)
+            tempClientList.sortBy { it.name }
             clientMutableList.postValue(tempClientList)
             _successInAddClient.postValue(true)
         }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.kldaji.loanclientmanagement.LoanClientManagementDatabase
 import com.kldaji.loanclientmanagement.model.local.client.ClientDao
+import com.kldaji.loanclientmanagement.model.local.recentSearchWord.RecentSearchWordDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,4 +23,8 @@ object LocalDatabaseModule {
     @Provides
     fun provideClientDao(loanClientManagementDatabase: LoanClientManagementDatabase): ClientDao =
         loanClientManagementDatabase.clientDao()
+
+    @Provides
+    fun provideRecentSearchWordDao(loanClientManagementDatabase: LoanClientManagementDatabase): RecentSearchWordDao =
+        loanClientManagementDatabase.recentSearchWordDao()
 }
