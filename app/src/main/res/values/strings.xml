@@ -32,4 +32,8 @@
     <string name="add_client_fragment_call_middle_hint">8616</string>
     <string name="add_client_fragment_call_back_hint">2217</string>
     <string name="add_client_fragment_load_doc_image">대출 서류 이미지</string>
+    <string name="add_client_fragment_meeting">Meeting</string>
+    <string name="add_client_fragment_meeting_date">2022년 02월 04일 금요일</string>
+    <string name="add_client_fragment_loan_start">실행일</string>
+    <string name="add_client_fragment_loan_start_date">2022년 02월 04일 금요일</string>
 </resources>
