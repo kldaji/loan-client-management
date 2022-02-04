@@ -20,6 +20,11 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
     private val recentSearchWordMutableList = MutableLiveData<List<RecentSearchWord>>()
     val recentSearchWordList: LiveData<List<RecentSearchWord>> = recentSearchWordMutableList
 
+    private val _clientInfoError = MutableLiveData<Boolean>()
+    val clientInfoError: LiveData<Boolean> = _clientInfoError
+    private val _successInAddClient = MutableLiveData<Boolean>()
+    val successInAddClient: LiveData<Boolean> = _successInAddClient
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             clientMutableList.postValue(clientLocalDataSource.getAllClients())
@@ -28,5 +33,34 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
         recentSearchWordMutableList.value = listOf(RecentSearchWord(1, "123"),
             RecentSearchWord(1, "123"),
             RecentSearchWord(1, "123"))
+    }
+
+    fun addClient(newClient: Client) {
+        checkClientInfo(newClient) ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            clientLocalDataSource.insertClient(newClient)
+            val tempClientList = clientMutableList.value?.toMutableList() ?: return@launch
+            tempClientList.add(newClient)
+            clientMutableList.postValue(tempClientList)
+            _successInAddClient.postValue(true)
+        }
+    }
+
+    private fun checkClientInfo(client: Client): Unit? {
+        with(client) {
+            if (name == "" || rrmFront == "" || rrmBack == "" || callMiddle == "" || callBack == "") {
+                _clientInfoError.value = true
+                return null
+            }
+        }
+        return Unit
+    }
+
+    fun doneClientInfoError() {
+        _clientInfoError.value = false
+    }
+
+    fun doneSuccessInAddClient() {
+        _successInAddClient.value = false
     }
 }

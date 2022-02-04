@@ -7,15 +7,15 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "client")
 data class Client(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     @ColumnInfo
     val loan: Loan,
     @ColumnInfo
     val name: String,
     @ColumnInfo
-    val rmmFront: String,
+    val rrmFront: String,
     @ColumnInfo
-    val rmmBack: String,
+    val rrmBack: String,
     @ColumnInfo
     val callMiddle: String,
     @ColumnInfo
@@ -24,6 +24,8 @@ data class Client(
     val meetingDate: String,
     @ColumnInfo
     val loanStartDate: String,
+    @ColumnInfo
+    val docs: String,
 )
 
 enum class Loan {
