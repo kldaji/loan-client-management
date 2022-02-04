@@ -18,6 +18,9 @@
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/stationary"
             app:popExitAnim="@anim/slide_down" />
+        <action
+            android:id="@+id/action_clientsFragment_to_clientInfoFragment"
+            app:destination="@id/clientInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchClientFragment"
@@ -31,4 +34,12 @@
         android:id="@+id/addClientFragment"
         android:name="com.kldaji.loanclientmanagement.ui.client.AddClientFragment"
         android:label="AddClientFragment" />
+    <fragment
+        android:id="@+id/clientInfoFragment"
+        android:name="com.kldaji.loanclientmanagement.ui.client.ClientInfoFragment"
+        android:label="ClientInfoFragment" >
+        <argument
+            android:name="client"
+            app:argType="com.kldaji.loanclientmanagement.model.data.Client" />
+    </fragment>
 </navigation>
