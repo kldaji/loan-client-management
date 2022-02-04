@@ -286,6 +286,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_add_client_loan_start_date" />
 
             <ImageView
+                android:id="@+id/iv_add_client_fragment"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
                 android:layout_marginTop="24dp"
@@ -296,6 +297,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_add_client_loan_start_date" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_client_fragment_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/add_client_fragment_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_add_client_fragment" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_attribute"
