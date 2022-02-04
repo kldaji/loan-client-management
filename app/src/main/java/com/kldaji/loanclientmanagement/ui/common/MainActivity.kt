@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
     private fun setBottomNavigationVisibility() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.searchClientFragment, R.id.addClientFragment -> binding.bnvMain.isVisible = false
+                R.id.searchClientFragment, R.id.addClientFragment, R.id.clientInfoFragment -> binding.bnvMain.isVisible =
+                    false
                 else -> binding.bnvMain.isVisible = true
             }
         }

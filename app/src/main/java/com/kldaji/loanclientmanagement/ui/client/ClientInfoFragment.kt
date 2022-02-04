@@ -13,21 +13,30 @@ class ClientInfoFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragm
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setToolbarInfo()
         setVisibility()
-        setEnabled()
         setInfoContent()
+        setEnabled()
+    }
+
+    private fun setToolbarInfo() {
+        with (binding.tbAddClient) {
+            title = "고객 정보"
+            setNavigationIcon(R.drawable.ic_delete_24)
+            inflateMenu(R.menu.toolbar_info_client)
+        }
     }
 
     private fun setVisibility() {
         with(binding) {
-            tvAddClientMeetingDateIcon.isVisible = false
-            tvAddClientLoanStartDateIcon.isVisible = false
+            groupVisibility.isVisible = false
         }
     }
 
     private fun setEnabled() {
         with(binding) {
-            rgAddClient.isEnabled = false
+            rbAddClientSecurity.isEnabled = false
+            rbAddClientJeonse.isEnabled = false
             etAddClientName.isEnabled = false
             etAddClientRrmFront.isEnabled = false
             etAddClientRrmBack.isEnabled = false

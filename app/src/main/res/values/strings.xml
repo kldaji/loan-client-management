@@ -37,4 +37,7 @@
     <string name="add_client_fragment_loan_start">실행일</string>
     <string name="add_client_fragment_loan_start_date">2022.02.04 (금)</string>
     <string name="add_client_fragment_add">추가</string>
+
+    <!-- menu_client_info_fragment -->
+    <string name="menu_client_info_fragment">수정</string>
 </resources>

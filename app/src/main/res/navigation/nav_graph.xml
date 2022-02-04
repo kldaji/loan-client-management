@@ -20,7 +20,10 @@
             app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_clientsFragment_to_clientInfoFragment"
-            app:destination="@id/clientInfoFragment" />
+            app:destination="@id/clientInfoFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/stationary"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/searchClientFragment"
