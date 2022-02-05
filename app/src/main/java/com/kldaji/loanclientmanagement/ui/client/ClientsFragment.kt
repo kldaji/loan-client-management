@@ -6,6 +6,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentClientsBinding
+import com.kldaji.loanclientmanagement.model.data.Client
+import com.kldaji.loanclientmanagement.model.data.EmptyData
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
 import com.kldaji.loanclientmanagement.ui.client.adapter.ItemClickListener
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
@@ -44,17 +46,19 @@ class ClientsFragment : BaseFragment<FragmentClientsBinding>(R.layout.fragment_c
     private fun setClientsAdapter() {
         clientsAdapter = ClientsAdapter(object : ItemClickListener {
             override fun onItemClick(position: Int) {
+                if (clientsAdapter.currentList[position] is EmptyData) return
                 this@ClientsFragment.findNavController()
                     .navigate(ClientsFragmentDirections.actionClientsFragmentToClientInfoFragment(
-                        clientsAdapter.currentList[position]))
+                        clientsAdapter.currentList[position] as Client))
             }
         })
         binding.rvClients.adapter = clientsAdapter
     }
 
     private fun setClientListObserver() {
-        clientViewModel.clientList.observe(viewLifecycleOwner, { clientList ->
-            clientsAdapter.submitList(clientList)
+        clientViewModel.clientList.observe(viewLifecycleOwner, {
+            if (it.isEmpty()) clientsAdapter.submitList(listOf(EmptyData(text = "")))
+            else clientsAdapter.submitList(it)
         })
     }
 }

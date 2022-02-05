@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "recentSearchWord")
 data class RecentSearchWord(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    override val id: Int = 0,
     @ColumnInfo
     val word: String,
     @ColumnInfo
     val millis: Long,
-)
+) : ItemData()

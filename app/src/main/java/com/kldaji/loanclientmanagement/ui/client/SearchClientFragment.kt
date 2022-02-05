@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentSearchClientBinding
+import com.kldaji.loanclientmanagement.model.data.EmptyData
 import com.kldaji.loanclientmanagement.model.data.RecentSearchWord
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
 import com.kldaji.loanclientmanagement.ui.client.adapter.ItemClickListener
@@ -24,7 +25,7 @@ import org.joda.time.DateTime
 @AndroidEntryPoint
 class SearchClientFragment :
     BaseFragment<FragmentSearchClientBinding>(R.layout.fragment_search_client) {
-    private val recentSearchWordsAdapter by lazy { RecentSearchWordsAdapter() }
+    private lateinit var recentSearchWordsAdapter: RecentSearchWordsAdapter
     private lateinit var searchResultClientsAdapter: ClientsAdapter
     private val clientViewModel: ClientViewModel by activityViewModels()
     private val recentSearchWordViewModel: RecentSearchWordViewModel by viewModels()
@@ -99,6 +100,12 @@ class SearchClientFragment :
     }
 
     private fun setRecentSearchWordsAdapter() {
+        recentSearchWordsAdapter = RecentSearchWordsAdapter(object: RecentSearchWordsAdapter.ChipCloseIconClickListener {
+            override fun onCloseIconClick(position: Int) {
+                if (recentSearchWordsAdapter.currentList[0] is EmptyData) return
+                recentSearchWordViewModel.deleteRecentSearchWord(recentSearchWordsAdapter.currentList[position] as RecentSearchWord)
+            }
+        })
         binding.rvSearchClientRecentSearchWords.adapter = recentSearchWordsAdapter
     }
 
@@ -113,13 +120,15 @@ class SearchClientFragment :
 
     private fun setRecentSearchWordListObserver() {
         recentSearchWordViewModel.recentSearchWordList.observe(viewLifecycleOwner, {
-            recentSearchWordsAdapter.submitList(it)
+            if (it.isEmpty()) recentSearchWordsAdapter.submitList(listOf(EmptyData(text = "검색 내역이 없습니다.")))
+            else recentSearchWordsAdapter.submitList(it)
         })
     }
 
     private fun setResultClientListObserver() {
         clientViewModel.resultClientList.observe(viewLifecycleOwner, {
-            searchResultClientsAdapter.submitList(it)
+            if (it.isEmpty()) searchResultClientsAdapter.submitList(listOf(EmptyData(text = "검색 결과가 없습니다.")))
+            else searchResultClientsAdapter.submitList(it)
         })
     }
 
