@@ -2,10 +2,10 @@ package com.kldaji.loanclientmanagement.ui.client
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kldaji.loanclientmanagement.model.data.Client
-import com.kldaji.loanclientmanagement.model.data.RecentSearchWord
 import com.kldaji.loanclientmanagement.model.local.client.ClientLocalDataSource
 import com.kldaji.loanclientmanagement.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +18,15 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
     ViewModel() {
     private val clientMutableList = MutableLiveData<List<Client>>()
     val clientList: LiveData<List<Client>> = clientMutableList
-    private val recentSearchWordMutableList = MutableLiveData<List<RecentSearchWord>>()
-    val recentSearchWordList: LiveData<List<RecentSearchWord>> = recentSearchWordMutableList
+
+    private val _searchWord = MutableLiveData<String>()
+    private val searchWord: LiveData<String> = _searchWord
+
+    val resultClientList: LiveData<List<Client>> = Transformations.map(searchWord) { word ->
+        clientList.value?.filter { client ->
+            client.name.contains(word)
+        }
+    }
 
     private val _clientInfoError = MutableLiveData<Boolean>()
     val clientInfoError: LiveData<Boolean> = _clientInfoError
@@ -33,6 +40,10 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
         viewModelScope.launch(Dispatchers.IO) {
             clientMutableList.postValue(clientLocalDataSource.getAllClients())
         }
+    }
+
+    fun setSearchWord(word: String) {
+        _searchWord.value = word
     }
 
     fun addClient(newClient: Client) {
