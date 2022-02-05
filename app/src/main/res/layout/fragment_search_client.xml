@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/gray_f0f0f0">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_search_client"
@@ -17,6 +18,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray_f5f5f5"
             app:endIconMode="clear_text"
             app:hintEnabled="false"
             app:layout_constraintEnd_toStartOf="@id/tv_search_client_cancel"
@@ -47,28 +50,49 @@
             app:layout_constraintTop_toTopOf="@id/til_search_client"
             tools:ignore="SpUsage" />
 
+        <TextView
+            android:id="@+id/tv_search_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/search_client_fragment"
+            app:layout_constraintStart_toStartOf="@id/rv_search_client_recent_search_words"
+            app:layout_constraintTop_toBottomOf="@id/til_search_client" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_client_recent_search_words"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/til_search_client"
-            app:layout_constraintTop_toBottomOf="@id/til_search_client"
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_client"
             tools:listitem="@layout/item_recent_search_word" />
+
+        <TextView
+            android:id="@+id/tv_search_client_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/search_client_fragment_result"
+            app:layout_constraintStart_toStartOf="@id/rv_search_client_recent_search_words"
+            app:layout_constraintTop_toBottomOf="@id/rv_search_client_recent_search_words" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_client_search_result_clients"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            android:visibility="gone"
+            android:background="@color/white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/til_search_client"
-            app:layout_constraintTop_toBottomOf="@id/til_search_client"
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_client_result"
             tools:listitem="@layout/item_client" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

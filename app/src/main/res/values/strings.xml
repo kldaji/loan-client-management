@@ -15,6 +15,8 @@
     <!-- search_client_fragment -->
     <string name="search_client_fragment_hint">고객 이름을 입력해주세요.</string>
     <string name="search_client_fragment_cancel">취소</string>
+    <string name="search_client_fragment">최근 검색어</string>
+    <string name="search_client_fragment_result">검색 결과</string>
 
     <!-- add_client_fragment_toolbar -->
     <string name="menu_add_client_fragment_close">닫기</string>
