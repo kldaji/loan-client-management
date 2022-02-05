@@ -100,12 +100,22 @@ class SearchClientFragment :
     }
 
     private fun setRecentSearchWordsAdapter() {
-        recentSearchWordsAdapter = RecentSearchWordsAdapter(object: RecentSearchWordsAdapter.ChipCloseIconClickListener {
-            override fun onCloseIconClick(position: Int) {
-                if (recentSearchWordsAdapter.currentList[0] is EmptyData) return
-                recentSearchWordViewModel.deleteRecentSearchWord(recentSearchWordsAdapter.currentList[position] as RecentSearchWord)
-            }
-        })
+        recentSearchWordsAdapter = RecentSearchWordsAdapter(
+            object : ItemClickListener {
+                override fun onItemClick(position: Int) {
+                    if (recentSearchWordsAdapter.currentList[0] is EmptyData) return
+                    val searchWord =
+                        (recentSearchWordsAdapter.currentList[position] as RecentSearchWord).word
+                    binding.tieSearchClient.setText(searchWord)
+                    binding.tieSearchClient.setSelection(searchWord.length)
+                    clientViewModel.setSearchWord(searchWord)
+                }
+            }, object : RecentSearchWordsAdapter.ChipCloseIconClickListener {
+                override fun onCloseIconClick(position: Int) {
+                    if (recentSearchWordsAdapter.currentList[0] is EmptyData) return
+                    recentSearchWordViewModel.deleteRecentSearchWord(recentSearchWordsAdapter.currentList[position] as RecentSearchWord)
+                }
+            })
         binding.rvSearchClientRecentSearchWords.adapter = recentSearchWordsAdapter
     }
 

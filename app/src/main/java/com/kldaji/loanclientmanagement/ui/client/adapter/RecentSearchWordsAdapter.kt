@@ -12,7 +12,7 @@ import com.kldaji.loanclientmanagement.model.data.ItemData
 import com.kldaji.loanclientmanagement.model.data.RecentSearchWord
 import com.kldaji.loanclientmanagement.utils.dp
 
-class RecentSearchWordsAdapter(private val chipCloseIconClickListener: ChipCloseIconClickListener) :
+class RecentSearchWordsAdapter(private val itemClickListener: ItemClickListener, private val chipCloseIconClickListener: ChipCloseIconClickListener) :
     ListAdapter<ItemData, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun getItemViewType(position: Int): Int {
@@ -44,6 +44,9 @@ class RecentSearchWordsAdapter(private val chipCloseIconClickListener: ChipClose
         RecyclerView.ViewHolder(binding.root) {
 
         init {
+            binding.cRecentSearchWord.setOnClickListener {
+                itemClickListener.onItemClick(adapterPosition)
+            }
             binding.cRecentSearchWord.setOnCloseIconClickListener {
                 chipCloseIconClickListener.onCloseIconClick(adapterPosition)
             }
