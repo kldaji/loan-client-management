@@ -31,7 +31,14 @@
     <fragment
         android:id="@+id/searchClientFragment"
         android:name="com.kldaji.loanclientmanagement.ui.client.SearchClientFragment"
-        android:label="SearchClientFragment" />
+        android:label="SearchClientFragment" >
+        <action
+            android:id="@+id/action_searchClientFragment_to_clientInfoFragment"
+            app:destination="@id/clientInfoFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/stationary"
+            app:popExitAnim="@anim/slide_down" />
+    </fragment>
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.kldaji.loanclientmanagement.ui.calendar.CalendarFragment"

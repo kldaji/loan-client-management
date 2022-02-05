@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentSearchClientBinding
+import com.kldaji.loanclientmanagement.model.data.Client
 import com.kldaji.loanclientmanagement.model.data.EmptyData
 import com.kldaji.loanclientmanagement.model.data.RecentSearchWord
 import com.kldaji.loanclientmanagement.ui.client.adapter.ClientsAdapter
@@ -122,7 +123,10 @@ class SearchClientFragment :
     private fun setSearchResultClientsAdapter() {
         searchResultClientsAdapter = ClientsAdapter(object : ItemClickListener {
             override fun onItemClick(position: Int) {
-
+                if (searchResultClientsAdapter.currentList[position] is EmptyData) return
+                this@SearchClientFragment.findNavController()
+                    .navigate(SearchClientFragmentDirections.actionSearchClientFragmentToClientInfoFragment(
+                        searchResultClientsAdapter.currentList[position] as Client))
             }
         })
         binding.rvSearchClientSearchResultClients.adapter = searchResultClientsAdapter
