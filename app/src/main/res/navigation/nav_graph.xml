@@ -11,7 +11,10 @@
         android:label="ClientsFragment" >
         <action
             android:id="@+id/action_clientsFragment_to_searchClientFragment"
-            app:destination="@id/searchClientFragment" />
+            app:destination="@id/searchClientFragment"
+            app:enterAnim="@anim/fade_in"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_clientsFragment_to_addClientFragment"
             app:destination="@id/addClientFragment"
