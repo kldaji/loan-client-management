@@ -33,6 +33,7 @@ class SearchClientFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initSearchWord()
         setEditTextFocus()
         setCancelClickListener()
         setEditTextSearchListener()
@@ -43,6 +44,10 @@ class SearchClientFragment :
         setRecentSearchWordListObserver()
         setResultClientListObserver()
         setRecentSearchWordInfoErrorObserver()
+    }
+
+    private fun initSearchWord() {
+        clientViewModel.setSearchWord("")
     }
 
     private fun setEditTextFocus() {
