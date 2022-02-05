@@ -30,11 +30,11 @@ class RecentSearchWordViewModel @Inject constructor(private val recentSearchWord
         checkRecentSearchWordInfo(newRecentSearchWord) ?: return
         viewModelScope.launch(Dispatchers.IO) {
             recentSearchWordLocalDataSource.insertRecentSearchWord(newRecentSearchWord)
-            val tempRecentSearchWordList =
-                _recentSearchWordList.value?.toMutableList() ?: return@launch
-            tempRecentSearchWordList.add(0, newRecentSearchWord)
-            _recentSearchWordList.postValue(tempRecentSearchWordList)
         }
+        val tempRecentSearchWordList =
+            _recentSearchWordList.value?.toMutableList() ?: return
+        tempRecentSearchWordList.add(0, newRecentSearchWord)
+        _recentSearchWordList.value = tempRecentSearchWordList
     }
 
     private fun checkRecentSearchWordInfo(recentSearchWord: RecentSearchWord): Unit? {
@@ -49,5 +49,15 @@ class RecentSearchWordViewModel @Inject constructor(private val recentSearchWord
 
     fun doneRecentSearchWordInfoError() {
         _recentSearchWordInfoError.value = false
+    }
+
+    fun deleteRecentSearchWord(recentSearchWord: RecentSearchWord) {
+        viewModelScope.launch(Dispatchers.IO) {
+            recentSearchWordLocalDataSource.deleteRecentSearchWord(recentSearchWord)
+        }
+        val tempRecentSearchWordList =
+            _recentSearchWordList.value?.toMutableList() ?: return
+        tempRecentSearchWordList.remove(recentSearchWord)
+        _recentSearchWordList.value = tempRecentSearchWordList
     }
 }
