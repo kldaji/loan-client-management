@@ -19,13 +19,12 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
     private val clientMutableList = MutableLiveData<List<Client>>()
     val clientList: LiveData<List<Client>> = clientMutableList
 
-    private val _searchWord = MutableLiveData<String>()
+    private val _searchWord = MutableLiveData("")
     private val searchWord: LiveData<String> = _searchWord
 
     val resultClientList: LiveData<List<Client>> = Transformations.map(searchWord) { word ->
-        clientList.value?.filter { client ->
-            client.name.contains(word)
-        }
+        if (word == "") listOf()
+        else clientList.value?.filter { client -> client.name.contains(word) }
     }
 
     private val _clientInfoError = MutableLiveData<Boolean>()
