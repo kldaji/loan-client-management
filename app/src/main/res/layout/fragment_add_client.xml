@@ -290,11 +290,19 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_add_client_loan_start_date"
                 app:layout_constraintTop_toTopOf="@id/tv_add_client_loan_start_date" />
 
+            <TextView
+                android:id="@+id/tv_add_client_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_camera_24"
+                app:layout_constraintStart_toStartOf="@id/iv_add_client_fragment"
+                app:layout_constraintTop_toBottomOf="@id/tv_add_client_loan_start" />
+
             <ImageView
                 android:id="@+id/iv_add_client_fragment"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
-                android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="@string/add_client_fragment_load_doc_image"
                 android:src="@drawable/ic_launcher_background"
@@ -302,7 +310,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.488"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_add_client_loan_start_date" />
+                app:layout_constraintTop_toBottomOf="@id/tv_add_client_camera" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_add_client_fragment_add"

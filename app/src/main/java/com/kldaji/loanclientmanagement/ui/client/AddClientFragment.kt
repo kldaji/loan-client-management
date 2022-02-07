@@ -1,7 +1,10 @@
 package com.kldaji.loanclientmanagement.ui.client
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -15,11 +18,22 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragment_add_client) {
     private val clientViewModel: ClientViewModel by activityViewModels()
+    private val selectImagesLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.clipData?.let {
+                    for (i in 0 until it.itemCount) {
+                        println(it.getItemAt(i).uri)
+                    }
+                }
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbarIconClickListener()
         setAddButtonClickListener()
+        setCameraClickListener()
         setClientInfoErrorObserver()
         setSuccessInAddClientObserver()
     }
@@ -41,6 +55,17 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
             val loan = getLoan()
             val newClient = getNewClient(loan)
             clientViewModel.addClient(newClient)
+        }
+    }
+
+    private fun setCameraClickListener() {
+        binding.tvAddClientCamera.setOnClickListener {
+            selectImagesLauncher.launch(Intent().apply {
+                type = "image/*"
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                action = Intent.ACTION_GET_CONTENT
+                Intent.createChooser(this, "Select Images")
+            })
         }
     }
 
