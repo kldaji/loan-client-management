@@ -1,5 +1,6 @@
 package com.kldaji.loanclientmanagement.model.data
 
+import android.net.Uri
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -28,7 +29,7 @@ data class Client(
     @ColumnInfo
     val loanStartDate: String,
     @ColumnInfo
-    val docs: String,
+    val docs: List<Uri>,
 ) : Parcelable, ItemData()
 
 enum class Loan {

@@ -12,6 +12,7 @@ import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentAddClientBinding
 import com.kldaji.loanclientmanagement.model.data.Client
 import com.kldaji.loanclientmanagement.model.data.Loan
+import com.kldaji.loanclientmanagement.ui.client.adapter.DocsImageAdapter
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,27 +22,41 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
     private val selectImagesLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let {
+                    it.clipData?.run {
+                        for (i in 0 until itemCount) {
+                            clientViewModel.addImage(getItemAt(i).uri)
+                        }
+                    } ?: kotlin.run {
+                        val uri = it.data ?: return@run
+                        clientViewModel.addImage(uri)
+                    }
+                }
                 result.data?.clipData?.let {
                     for (i in 0 until it.itemCount) {
-                        println(it.getItemAt(i).uri)
+                        clientViewModel.addImage(it.getItemAt(i).uri)
                     }
                 }
             }
         }
+    private lateinit var docsImageAdapter: DocsImageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbarIconClickListener()
         setAddButtonClickListener()
         setCameraClickListener()
+        setDocsImageAdapter()
         setClientInfoErrorObserver()
         setSuccessInAddClientObserver()
+        setDocImageListObserver()
     }
 
     private fun setToolbarIconClickListener() {
         binding.tbAddClient.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.close_edit_complete -> {
+                    clientViewModel.clearImages()
                     this.findNavController().popBackStack()
                     true
                 }
@@ -63,10 +78,15 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
             selectImagesLauncher.launch(Intent().apply {
                 type = "image/*"
                 putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                action = Intent.ACTION_GET_CONTENT
+                action = Intent.ACTION_OPEN_DOCUMENT
                 Intent.createChooser(this, "Select Images")
             })
         }
+    }
+
+    private fun setDocsImageAdapter() {
+        docsImageAdapter = DocsImageAdapter()
+        binding.vpAddClientFragment.adapter = docsImageAdapter
     }
 
     private fun getLoan(): Loan {
@@ -86,7 +106,7 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
             callBack = binding.etAddClientCallBack.text.toString(),
             meetingDate = binding.tvAddClientMeetingDate.text.toString(),
             loanStartDate = binding.tvAddClientLoanStartDate.text.toString(),
-            docs = ""
+            docs = clientViewModel.docImageList.value!!
         )
     }
 
@@ -102,9 +122,16 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
     private fun setSuccessInAddClientObserver() {
         clientViewModel.successInAddClient.observe(viewLifecycleOwner, {
             if (it) {
+                clientViewModel.clearImages()
                 this.findNavController().popBackStack()
                 clientViewModel.doneSuccessInAddClient()
             }
+        })
+    }
+
+    private fun setDocImageListObserver() {
+        clientViewModel.docImageList.observe(viewLifecycleOwner, {
+            docsImageAdapter.submitList(it)
         })
     }
 }

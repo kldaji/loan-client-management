@@ -1,5 +1,6 @@
 package com.kldaji.loanclientmanagement.ui.client
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -34,6 +35,9 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
 
     private val _editable = MutableLiveData<Event<Boolean>>()
     val editable: LiveData<Event<Boolean>> = _editable
+
+    private val _docImageList = MutableLiveData<List<Uri>>(listOf())
+    val docImageList: LiveData<List<Uri>> = _docImageList
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -91,5 +95,15 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
             }
             clientMutableList.postValue(tempClientList)
         }
+    }
+
+    fun addImage(uri: Uri) {
+        val tempDocImageList = _docImageList.value?.toMutableList() ?: return
+        tempDocImageList.add(uri)
+        _docImageList.value = tempDocImageList
+    }
+
+    fun clearImages() {
+        _docImageList.value = listOf()
     }
 }

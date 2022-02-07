@@ -10,17 +10,20 @@ import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentAddClientBinding
 import com.kldaji.loanclientmanagement.model.data.Client
 import com.kldaji.loanclientmanagement.model.data.Loan
+import com.kldaji.loanclientmanagement.ui.client.adapter.DocsImageAdapter
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
 import com.kldaji.loanclientmanagement.utils.EventObserver
 
 class ClientInfoFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragment_add_client) {
     private val clientsViewModel: ClientViewModel by activityViewModels()
     private val args by navArgs<ClientInfoFragmentArgs>()
+    private lateinit var docsImageAdapter: DocsImageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setToolbarInfo()
         setVisibility(false)
+        setDocsImageAdapter()
         setInfoContent()
         setEnabled(false)
         setToolbarIconClickListener()
@@ -44,6 +47,11 @@ class ClientInfoFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragm
         }
     }
 
+    private fun setDocsImageAdapter() {
+        docsImageAdapter = DocsImageAdapter()
+        binding.vpAddClientFragment.adapter = docsImageAdapter
+    }
+
     private fun setInfoContent() {
         with(args.client) {
             binding.etAddClientName.setText(name)
@@ -51,6 +59,7 @@ class ClientInfoFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragm
             binding.etAddClientRrmBack.setText(rrmBack)
             binding.etAddClientCallMiddle.setText(callMiddle)
             binding.etAddClientCallBack.setText(callBack)
+            docsImageAdapter.submitList(docs)
         }
     }
 
@@ -115,7 +124,7 @@ class ClientInfoFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragm
             callBack = binding.etAddClientCallBack.text.toString(),
             meetingDate = binding.tvAddClientMeetingDate.text.toString(),
             loanStartDate = binding.tvAddClientLoanStartDate.text.toString(),
-            docs = ""
+            docs = args.client.docs
         )
     }
 }
