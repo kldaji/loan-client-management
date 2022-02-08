@@ -1,7 +1,7 @@
 package com.kldaji.loanclientmanagement.model.data
 
 sealed class ItemData {
-    abstract val id: Int
+    abstract val id: Long
 }
 
-data class EmptyData(override val id: Int = 0, val text: String): ItemData()
+data class EmptyData(override val id: Long = 0L, val text: String): ItemData()

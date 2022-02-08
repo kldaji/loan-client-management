@@ -7,11 +7,13 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kldaji.loanclientmanagement.model.data.Client
+import com.kldaji.loanclientmanagement.model.data.ImageUri
 import com.kldaji.loanclientmanagement.model.local.client.ClientLocalDataSource
 import com.kldaji.loanclientmanagement.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,8 +38,8 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
     private val _editable = MutableLiveData<Event<Boolean>>()
     val editable: LiveData<Event<Boolean>> = _editable
 
-    private val _docImageList = MutableLiveData<List<Uri>>(listOf())
-    val docImageList: LiveData<List<Uri>> = _docImageList
+    private val _docImageList = MutableLiveData<List<ImageUri>>(listOf())
+    val docImageList: LiveData<List<ImageUri>> = _docImageList
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -99,7 +101,7 @@ class ClientViewModel @Inject constructor(private val clientLocalDataSource: Cli
 
     fun addImage(uri: Uri) {
         val tempDocImageList = _docImageList.value?.toMutableList() ?: return
-        tempDocImageList.add(uri)
+        tempDocImageList.add(ImageUri(DateTime.now().millis, uri))
         _docImageList.value = tempDocImageList
     }
 

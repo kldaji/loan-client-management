@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "client")
 data class Client(
     @PrimaryKey(autoGenerate = true)
-    override val id: Int = 0,
+    override val id: Long = 0L,
     @ColumnInfo
     val loan: Loan,
     @ColumnInfo
@@ -29,7 +29,7 @@ data class Client(
     @ColumnInfo
     val loanStartDate: String,
     @ColumnInfo
-    val docs: List<Uri>,
+    val docs: List<ImageUri>,
 ) : Parcelable, ItemData()
 
 enum class Loan {

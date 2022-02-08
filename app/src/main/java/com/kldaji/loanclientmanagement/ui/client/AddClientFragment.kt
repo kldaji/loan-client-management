@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.kldaji.loanclientmanagement.R
 import com.kldaji.loanclientmanagement.databinding.FragmentAddClientBinding
 import com.kldaji.loanclientmanagement.model.data.Client
+import com.kldaji.loanclientmanagement.model.data.EmptyData
 import com.kldaji.loanclientmanagement.model.data.Loan
 import com.kldaji.loanclientmanagement.ui.client.adapter.DocsImageAdapter
 import com.kldaji.loanclientmanagement.ui.common.BaseFragment
@@ -131,7 +132,8 @@ class AddClientFragment : BaseFragment<FragmentAddClientBinding>(R.layout.fragme
 
     private fun setDocImageListObserver() {
         clientViewModel.docImageList.observe(viewLifecycleOwner, {
-            docsImageAdapter.submitList(it)
+            if (it.isEmpty()) docsImageAdapter.submitList(listOf(EmptyData(text = "등록된 문서가 없습니다.")))
+            else docsImageAdapter.submitList(it)
         })
     }
 }
